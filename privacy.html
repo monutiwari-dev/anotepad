@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - AnoNotepad</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-12PNSQS749"></script>
+    <script src="google-analytics.js"></script>
+    <style>
+        body {
+            overflow: auto !important;
+            overflow-x: hidden;
+            height: auto;
+        }
+        html {
+            overflow: auto !important;
+            overflow-x: hidden;
+            height: auto;
+        }
+        .page-container {
+            min-height: 100vh;
+            display: block;
+            background: var(--bg-secondary);
+        }
+        .page-header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9375rem;
+        }
+        .back-btn:hover {
+            background: var(--hover-bg);
+            border-color: var(--primary-color);
+        }
+        .page-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            width: 100%;
+        }
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .page-title .icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        .content-section {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+        .content-section h2 {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .content-section h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .content-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .content-section ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        .content-section li {
+            margin-bottom: 0.75rem;
+        }
+        .info-box {
+            background: var(--bg-tertiary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin: 2rem 0;
+        }
+        .info-box p {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        .policy-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .policy-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .policy-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+        @media (max-width: 768px) {
+            .page-content {
+                padding: 2rem 1rem;
+            }
+            .content-section {
+                padding: 1.5rem;
+            }
+            .page-title h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Back to Notepad</span>
+            </a>
+            <button class="header-btn" id="themeToggle" title="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+        
+        <main class="page-content">
+            <div class="page-title">
+                <div class="icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>Privacy Policy</h1>
+                <p>How we collect, use, and protect your information</p>
+            </div>
+            
+            <div class="content-section">
+                <div class="info-box">
+                    <p><strong>Last Updated:</strong> <span id="lastUpdated"></span></p>
+                </div>
+                
+                <p>
+                    At AnoNotepad, we take your privacy seriously. This Privacy Policy explains how we collect, 
+                    use, disclose, and safeguard your information when you use our Service. Please read this 
+                    privacy policy carefully. If you do not agree with the terms of this privacy policy, please 
+                    do not access the Service.
+                </p>
+                
+                <div class="policy-item">
+                    <h3>1. Information We Collect</h3>
+                    <p>
+                        We collect information that you provide directly to us when you use our Service. This includes:
+                    </p>
+                    <ul>
+                        <li><strong>Account Information:</strong> When you sign in with Google, we collect your name, email address, and profile picture.</li>
+                        <li><strong>Content:</strong> All notes, folders, and other content you create using AnoNotepad.</li>
+                        <li><strong>Usage Data:</strong> Information about how you interact with our Service, including features you use and actions you take.</li>
+                        <li><strong>Device Information:</strong> Information about your device, including IP address, browser type, and operating system.</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>2. How We Use Your Information</h3>
+                    <p>
+                        We use the information we collect to:
+                    </p>
+                    <ul>
+                        <li>Provide, maintain, and improve our Service</li>
+                        <li>Process transactions and send related information</li>
+                        <li>Send you technical notices, updates, and support messages</li>
+                        <li>Respond to your comments, questions, and requests</li>
+                        <li>Monitor and analyze trends, usage, and activities in connection with our Service</li>
+                        <li>Detect, prevent, and address technical issues and security threats</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>3. Data Storage and Security</h3>
+                    <p>
+                        Your notes and data are stored securely on our servers. We implement appropriate technical 
+                        and organizational measures to protect your personal information against unauthorized access, 
+                        alteration, disclosure, or destruction.
+                    </p>
+                    <p>
+                        However, no method of transmission over the Internet or electronic storage is 100% secure. 
+                        While we strive to use commercially acceptable means to protect your personal information, 
+                        we cannot guarantee its absolute security.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>4. Data Sharing and Disclosure</h3>
+                    <p>
+                        We do not sell, trade, or rent your personal information to third parties. We may share 
+                        your information only in the following circumstances:
+                    </p>
+                    <ul>
+                        <li><strong>Service Providers:</strong> We may share information with third-party service providers who perform services on our behalf, such as hosting, analytics, and customer support.</li>
+                        <li><strong>Legal Requirements:</strong> We may disclose your information if required to do so by law or in response to valid requests by public authorities.</li>
+                        <li><strong>Business Transfers:</strong> If we are involved in a merger, acquisition, or asset sale, your information may be transferred.</li>
+                        <li><strong>With Your Consent:</strong> We may share your information with your consent or at your direction.</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>5. Your Rights and Choices</h3>
+                    <p>
+                        You have the following rights regarding your personal information:
+                    </p>
+                    <ul>
+                        <li><strong>Access:</strong> You can access and review your personal information and content at any time through your account.</li>
+                        <li><strong>Update:</strong> You can update your account information and content at any time.</li>
+                        <li><strong>Delete:</strong> You can delete your account and all associated data at any time.</li>
+                        <li><strong>Export:</strong> You can export your notes and data in various formats (PDF, DOCX, TXT).</li>
+                        <li><strong>Opt-out:</strong> You can opt-out of certain communications from us by adjusting your account settings.</li>
+                    </ul>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>6. Cookies and Tracking Technologies</h3>
+                    <p>
+                        We use cookies and similar tracking technologies to track activity on our Service and hold 
+                        certain information. Cookies are files with a small amount of data which may include an anonymous 
+                        unique identifier.
+                    </p>
+                    <p>
+                        You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. 
+                        However, if you do not accept cookies, you may not be able to use some portions of our Service.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>7. Data Retention</h3>
+                    <p>
+                        We retain your personal information for as long as necessary to provide you with our Service 
+                        and fulfill the purposes described in this Privacy Policy. When you delete your account, we will 
+                        delete or anonymize your personal information, except where we are required to retain it for legal 
+                        or legitimate business purposes.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>8. Children's Privacy</h3>
+                    <p>
+                        Our Service is not intended for children under the age of 13. We do not knowingly collect 
+                        personal information from children under 13. If you are a parent or guardian and believe that 
+                        your child has provided us with personal information, please contact us so we can delete such 
+                        information.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>9. International Data Transfers</h3>
+                    <p>
+                        Your information may be transferred to and maintained on computers located outside of your 
+                        state, province, country, or other governmental jurisdiction where data protection laws may 
+                        differ from those in your jurisdiction.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>10. Changes to This Privacy Policy</h3>
+                    <p>
+                        We may update our Privacy Policy from time to time. We will notify you of any changes by posting 
+                        the new Privacy Policy on this page and updating the "Last Updated" date. You are advised to 
+                        review this Privacy Policy periodically for any changes.
+                    </p>
+                </div>
+                
+                <div class="policy-item">
+                    <h3>11. Contact Us</h3>
+                    <p>
+                        If you have any questions about this Privacy Policy, please contact us through our 
+                        <a href="contact.html" style="color: var(--primary-color); text-decoration: none;">contact page</a>.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Set last updated date
+        document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('i');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    </script>
+</body>
+</html>

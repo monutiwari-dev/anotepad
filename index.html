@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notepad | Online Text Editor | aNotepad</title>
+    <meta name="description" content="aNotepad is a free online notepad tool for quick note taking. Write text online, save notes instantly, and access anytime from your browser.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://anotepad.app/">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="aNotepad">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+    
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google tag (gtag.js) - Load asynchronously -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-12PNSQS749"></script>
+    <script defer src="google-analytics.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Overlay for Mobile -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <h1 class="sr-only">aNotepad - Online Notepad and Text Editor</h1>
+                <div class="logo-icon">
+                    <i class="fas fa-sticky-note"></i>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item" id="newNoteBtn">
+                    <div class="nav-icon"><i class="fas fa-plus-circle"></i></div>
+                    <span>New Note</span>
+                </a>
+                <div class="nav-item-dropdown" id="pinnedNotesDropdown">
+                    <a href="#" class="nav-item" id="pinnedNotesBtn" data-filter="pinned">
+                        <div class="nav-icon">
+                            <svg class="pin-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span>Pinned</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-menu" id="pinnedNotesMenu">
+                        <div class="pinned-notes-list" id="pinnedNotesList">
+                            <!-- Pinned notes will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="nav-item" id="allNotesBtn">
+                    <div class="nav-icon"><i class="fas fa-file-alt"></i></div>
+                    <span>All Notes</span>
+                </a>
+                <a href="#" class="nav-item" id="trashBtn" data-filter="trash">
+                    <div class="nav-icon"><i class="fas fa-trash"></i></div>
+                    <span>Trash</span>
+                </a>
+                <div class="nav-divider"></div>
+                <div class="nav-section-header">
+                    <span>Folders</span>
+                    <button class="add-folder-btn" id="addFolderBtn" title="Add Folder">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div id="foldersList" class="folders-list">
+                    <!-- Folders will be loaded here -->
+                </div>
+                <div class="nav-divider"></div>
+                <div class="nav-item-dropdown" id="moreDropdown">
+                    <a href="#" class="nav-item" id="moreBtn">
+                        <div class="nav-icon"><i class="fas fa-ellipsis-h"></i></div>
+                        <span>More</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <div class="dropdown-menu" id="moreMenu">
+                        <a href="#" class="dropdown-item" id="aboutMenuItem">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                        </a>
+                        <a href="#" class="dropdown-item" id="termsMenuItem">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Terms of Use</span>
+                        </a>
+                        <a href="#" class="dropdown-item" id="privacyMenuItem">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Privacy Policy</span>
+                        </a>
+                        <a href="#" class="dropdown-item" id="contactMenuItem">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact US</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="upload-btn" id="uploadDocBtn">
+                    <i class="fas fa-arrow-up"></i>
+                    Upload Doc
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-area">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <input type="text" id="noteTitle" class="document-title" placeholder="Untitled Document" value="Untitled Document">
+                </div>
+                <div class="header-right">
+                    <div class="note-meta" id="noteMeta" style="display: none;">
+                        <button class="header-btn pin-btn" id="pinNoteBtn" title="Pin Note">
+                            <svg class="pin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="header-btn" id="findReplaceBtn" title="Find & Replace (Ctrl+F)">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="header-btn" id="fullscreenBtn" title="Full Screen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+                    <button class="header-btn" id="themeToggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="header-btn" id="versionHistoryBtn" title="Version History">
+                        <i class="fas fa-history"></i>
+                    </button>
+                    <button class="header-btn" id="helpBtn" title="Keyboard Shortcuts (Ctrl+?)">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <div class="user-menu-container" id="userMenuContainer" style="display: none;">
+                        <button class="header-btn user-menu-btn" id="userMenuBtn" title="User Menu">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="user-name" id="userName"></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="user-dropdown-menu" id="userDropdownMenu">
+                            <div class="user-info">
+                                <div class="user-email" id="userEmailDisplay"></div>
+                            </div>
+                            <div class="user-dropdown-divider"></div>
+                            <button class="user-dropdown-item" id="signOutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="header-btn" id="signInBtn" title="Sign In">Sign in</button>
+                    <div class="language-selector">
+                        <i class="fas fa-flag"></i>
+                        <select id="languageSelect">
+                            <option value="en">EN</option>
+                            <option value="es">ES</option>
+                            <option value="fr">FR</option>
+                            <option value="de">DE</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Editor Container -->
+            <div class="editor-container">
+                <!-- Toolbar -->
+                <div class="editor-toolbar">
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn" data-command="undo" title="Undo">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="toolbar-btn" data-command="redo" title="Redo">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-divider"></div>
+                    
+                    <div class="toolbar-section">
+                        <select class="toolbar-select" id="fontFamily">
+                            <option value="Arial">Arial</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Verdana">Verdana</option>
+                        </select>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn style-btn" id="paragraphStyleBtn" title="Paragraph Style">
+                            <i class="fas fa-paragraph"></i>
+                            <span>Normal</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn" data-command="fontSize" data-value="-1" title="Decrease Font Size">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <span class="font-size-display">16</span>
+                        <button class="toolbar-btn" data-command="fontSize" data-value="1" title="Increase Font Size">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-divider"></div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn" data-command="bold" title="Bold">
+                            <strong>B</strong>
+                        </button>
+                        <button class="toolbar-btn" data-command="italic" title="Italic">
+                            <em>I</em>
+                        </button>
+                        <button class="toolbar-btn" data-command="underline" title="Underline">
+                            <u>U</u>
+                        </button>
+                        <button class="toolbar-btn" data-command="code" title="Code">
+                            &lt;/&gt;
+                        </button>
+                        <button class="toolbar-btn" data-command="createLink" title="Link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn color-btn" id="textColorBtn" title="Text Color">
+                            <span class="color-indicator" style="background: #000;"></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <button class="toolbar-btn color-btn" id="highlightColorBtn" title="Highlight Color">
+                            <i class="fas fa-highlighter"></i>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn" id="caseBtn" title="Change Case">
+                            <i class="fas fa-text-height"></i>
+                            <span>Case</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn insert-btn" id="insertBtn" title="Insert">
+                            <i class="fas fa-plus"></i>
+                            Insert
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn" id="checklistBtn" title="Insert Checklist" data-command="insertChecklist">
+                            <i class="fas fa-tasks"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="toolbar-section">
+                        <button class="toolbar-btn align-btn" id="alignBtn" title="Text Align">
+                            <i class="fas fa-align-left"></i>
+                            <span>Left Align</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editor Wrapper -->
+                <div class="editor-wrapper">
+                    <div contenteditable="true" id="noteEditor" class="note-editor" spellcheck="true" data-placeholder="Start writing, press &quot;/&quot; for commands..."></div>
+                </div>
+
+                <!-- Editor Footer -->
+                <div class="editor-footer">
+                    <div class="word-count-display">
+                        <span id="wordCount">Words: 0</span>
+                        <span id="charCount">Characters: 0</span>
+                    </div>
+                    <div class="note-folder" id="noteFolderContainer" style="display: none;">
+                        <label>Folder:</label>
+                        <select id="noteFolderSelect" class="folder-select">
+                            <option value="">No Folder</option>
+                        </select>
+                    </div>
+                    <div class="editor-footer-actions">
+                        <button class="footer-action-btn" id="folderToggleBtn" title="Select Folder">
+                            <i class="fas fa-folder"></i>
+                        </button>
+                        <button class="footer-action-btn" id="duplicateBtn" title="Duplicate">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <div class="export-dropdown-container">
+                            <button class="footer-action-btn" id="exportBtn" title="Export Note">
+                                <i class="fas fa-file-export"></i>
+                            </button>
+                            <div class="export-dropdown-menu" id="exportDropdown">
+                                <button class="export-option" data-format="pdf">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Export as PDF</span>
+                                </button>
+                                <button class="export-option" data-format="docx">
+                                    <i class="fas fa-file-word"></i>
+                                    <span>Export as DOCX</span>
+                                </button>
+                                <button class="export-option" data-format="txt">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Export as TXT</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="footer-action-btn" id="deleteBtn" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="importFileInput" accept=".txt,.html,.doc,.docx" style="display: none;">
+
+    <!-- Sign In Popup Modal -->
+    <div class="popup-modal" id="signInModal">
+        <div class="popup-modal-overlay"></div>
+        <div class="popup-modal-content">
+            <div class="popup-modal-header">
+                <h2 id="authModalTitle">Sign In</h2>
+                <button class="popup-modal-close" id="closeSignInModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="popup-modal-body">
+                <div class="auth-content">
+                    <div class="signin-logo">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <div id="authError" class="auth-error" style="display: none; margin-bottom: 1rem; padding: 0.75rem; background: rgba(220, 53, 69, 0.1); border-radius: 6px; color: var(--danger);"></div>
+                    <form id="authForm">
+                        <div id="nameField" class="form-group" style="display: none; margin-bottom: 1rem;">
+                            <label for="authName" style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-primary);">Name</label>
+                            <input type="text" id="authName" name="name" placeholder="Enter your name" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-size: 1rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label for="authEmail" style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-primary);">Email</label>
+                            <input type="email" id="authEmail" name="email" placeholder="Enter your email" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-size: 1rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="authPassword" style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-primary);">Password</label>
+                            <input type="password" id="authPassword" name="password" placeholder="Enter your password" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-primary); color: var(--text-primary); font-size: 1rem;">
+                        </div>
+                        <button type="submit" class="btn-auth-primary" id="authSubmitBtn" style="width: 100%; padding: 0.75rem; background: var(--primary-color); color: white; border: none; border-radius: 6px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color 0.2s;">
+                            <span id="authSubmitText">Sign In</span>
+                        </button>
+                    </form>
+                    <div class="auth-switch" style="margin-top: 1.5rem; text-align: center;">
+                        <p style="color: var(--text-secondary); font-size: 0.9375rem;">
+                            <span id="authSwitchText">Don't have an account? </span>
+                            <a href="#" id="authSwitchLink" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">Sign Up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes List Modal -->
+    <div class="notes-modal" id="notesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>All Notes</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="search-box-modal">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search notes...">
+                </div>
+                <div class="notes-list" id="notesList">
+                    <!-- Notes will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Find & Replace Modal -->
+    <div class="notes-modal" id="findReplaceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-search"></i> Find & Replace</h2>
+                <button class="modal-close" id="closeFindReplaceModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="find-replace-form">
+                    <div class="form-group">
+                        <label>Find:</label>
+                        <input type="text" id="findInput" placeholder="Search text...">
+                    </div>
+                    <div class="form-group">
+                        <label>Replace with:</label>
+                        <input type="text" id="replaceInput" placeholder="Replace text...">
+                    </div>
+                    <div class="form-options">
+                        <label><input type="checkbox" id="matchCase"> Match case</label>
+                        <label><input type="checkbox" id="wholeWords"> Whole words only</label>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-primary" id="findNextBtn">Find Next</button>
+                        <button class="btn-primary" id="replaceBtn">Replace</button>
+                        <button class="btn-primary" id="replaceAllBtn">Replace All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Folder Modal -->
+    <div class="notes-modal" id="folderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="folderModalTitle"><i class="fas fa-folder"></i> New Folder</h2>
+                <button class="modal-close" id="closeFolderModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Folder Name:</label>
+                    <input type="text" id="folderNameInput" placeholder="Enter folder name...">
+                </div>
+                <div class="form-group">
+                    <label>Color:</label>
+                    <div class="color-picker" id="folderColorPicker">
+                        <div class="color-option selected" data-color="#6366f1" style="background: #6366f1;"></div>
+                        <div class="color-option" data-color="#8b5cf6" style="background: #8b5cf6;"></div>
+                        <div class="color-option" data-color="#ec4899" style="background: #ec4899;"></div>
+                        <div class="color-option" data-color="#f59e0b" style="background: #f59e0b;"></div>
+                        <div class="color-option" data-color="#10b981" style="background: #10b981;"></div>
+                        <div class="color-option" data-color="#3b82f6" style="background: #3b82f6;"></div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn-primary" id="saveFolderBtn">Save Folder</button>
+                    <button class="btn-secondary" id="cancelFolderBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Modal -->
+    <div class="notes-modal" id="shortcutsModal">
+        <div class="modal-content shortcuts-modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h2>
+                <button class="modal-close" id="closeShortcutsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body shortcuts-body">
+                <div class="shortcuts-section">
+                    <h3>General</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>S</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>S</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Save Note</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>N</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>N</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">New Note</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>?</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>?</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Show Shortcuts</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>F</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>F</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Search Notes</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Text Formatting</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>B</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>B</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Bold</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>I</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>I</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Italic</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>U</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>U</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Underline</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Strikethrough</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Editing</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Z</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Z</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Undo</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Y</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Redo</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>A</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>A</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Select All</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>C</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>C</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Copy</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>V</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>V</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Paste</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>X</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>X</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Cut</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Text Alignment</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>L</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Left Align</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Center Align</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Right Align</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>J</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Justify</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Indentation</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>]</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>]</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Indent</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>[</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>[</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Outdent</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Lists</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>7</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>7</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Numbered List</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>8</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>8</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Bullet List</span>
+                    </div>
+                </div>
+
+                <div class="shortcuts-section">
+                    <h3>Other</h3>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Ctrl</kbd> + <kbd>D</kbd>
+                            <span class="shortcut-mac"><kbd>Cmd</kbd> + <kbd>D</kbd></span>
+                        </div>
+                        <span class="shortcut-desc">Duplicate Note</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Delete</kbd>
+                        </div>
+                        <span class="shortcut-desc">Delete Note</span>
+                    </div>
+                    <div class="shortcut-item">
+                        <div class="shortcut-keys">
+                            <kbd>Esc</kbd>
+                        </div>
+                        <span class="shortcut-desc">Close Modal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Version History Modal -->
+    <div class="notes-modal" id="versionHistoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-history"></i> Version History</h2>
+                <button class="modal-close" id="closeVersionHistoryModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="versionHistoryLoading" style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    <i class="fas fa-spinner fa-spin"></i> Loading versions...
+                </div>
+                <div id="versionHistoryEmpty" style="text-align: center; padding: 2rem; color: var(--text-secondary); display: none;">
+                    <i class="fas fa-history" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;"></i>
+                    <p>No version history available for this note.</p>
+                </div>
+                <div id="versionHistoryTimeline" style="display: none;">
+                    <div class="version-timeline" id="versionTimelineContainer">
+                        <!-- Versions will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load main script asynchronously -->
+    <script defer src="script.js"></script>
+</body>
+</html>
